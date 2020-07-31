@@ -9,7 +9,7 @@ originalDataset = read.csv('Market_Basket_Optimisation.csv', header = FALSE)
 
 #Matriz Esparsa
 dataset = read.transactions('Market_Basket_Optimisation.csv', sep = ',', 
-                            rm.duplicates = TRUE) #remove entradas duplicadas em cada transaÁ„o
+                            rm.duplicates = TRUE) #remove entradas duplicadas em cada transa√ß√£o
 summary(dataset) #Detalhes da matriz
 itemFrequencyPlot(dataset, topN = 10) #Top 10 products
 
@@ -18,13 +18,18 @@ rules = apriori(data = dataset, parameter = list(support = 0.003, confidence = 0
 
 #SUPPORT
 #otimizar venda de produtos comprados pelo menos 3 vezes ao dia; Por semana: 3*7;
-#Support (mÌnimo): 3*7/7501 ~ 0.003
+#Support (m√≠nimo): 3*7/7501 ~ 0.003
 #CONFIDENCE
-#Baixa: regras que n„o fazem sentido; Alta: regras Ûbvias;
-#Comece com o valor default (0.8) e v· diminuindo (tentativa e erro).
-#AtenÁ„o: um valor de 0.8 È muito alto e n„o gerar· nenhuma regra nesse caso. 
-#Um valor de 0.8 significa que todas as regras geradas devem estar corretas em 80% das transaÁıes.
+#Baixa: regras que n√£o fazem sentido; Alta: regras √≥bvias;
+#Comece com o valor default (0.8) e v√° diminuindo (tentativa e erro).
+#Aten√ß√£o: um valor de 0.8 √© muito alto e n√£o gerar√° nenhuma regra nesse caso. 
+#Um valor de 0.8 significa que todas as regras geradas devem estar corretas em 80% das transa√ß√µes.
 
 # Visualizar resultados
-inspect(sort(rules, by = 'lift')[1:10])
+inspect(sort(rules, by = 'lift')[1:15])
+
+library(arulesViz)
+# create a chart
+gRules <- head(rules, n = 15, by = "lift")
+plot(gRules, method="graph")
 
